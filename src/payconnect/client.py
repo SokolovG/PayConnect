@@ -1,12 +1,17 @@
 import os
-from typing import Any
+from typing import TypeVar, cast
 
+import msgspec
 from dotenv import load_dotenv
 
-from .constants import HttpMethod, RequestOptions
+from .constants import RequestOptions
+from .enums import HttpMethod
 
 load_dotenv()
 API_KEY = os.getenv("JM_TOKEN")
+
+
+T = TypeVar("T")
 
 
 class JMClient:
@@ -19,6 +24,15 @@ class JMClient:
         }
 
     def _make_request(
-        self, method: HttpMethod, endpoint: str, **kwargs: RequestOptions
-    ) -> dict[str, Any]:
-        return {"": ""}
+        self,
+        method: HttpMethod,
+        endpoint: str,
+        response_type: type[T],
+        **kwargs: RequestOptions,
+    ) -> T:
+        response_data = {"": ""}
+        if response_type:
+            converted_data = msgspec.convert(response_data, response_type)
+            return cast(T, converted_data)
+
+        return cast(T, response_data)

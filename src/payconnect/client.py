@@ -4,8 +4,8 @@ from typing import TypeVar, cast
 import msgspec
 from dotenv import load_dotenv
 
-from .constants import RequestOptions
-from .enums import HttpMethod
+from src.payconnect.constants import RequestOptions
+from src.payconnect.enums import HttpMethod
 
 load_dotenv()
 API_KEY = os.getenv("JM_TOKEN")

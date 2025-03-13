@@ -1,7 +1,6 @@
-from .client import JMClient
-from .constants import Payload
-from .dto.schemas import Payment
-from .enums import HttpMethod
+from src.payconnect.client import JMClient
+from src.payconnect.dto.schemas import Payload, Payment
+from src.payconnect.enums import HttpMethod
 
 
 class JMPaymentAPI:
@@ -20,5 +19,5 @@ class JMPaymentAPI:
             method=HttpMethod.POST,
             endpoint="/api/v1/payments",
             json=payment_data,
-            response_type=Payload,
+            response_type=Payment,
         )

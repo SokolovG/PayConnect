@@ -1,6 +1,6 @@
 from typing import Any, TypedDict
 
-from src.payconnect.dto.schemas import Payload
+from src.infrastructure.jm_integration.dto.schemas import Payload
 
 
 class RequestOptions(TypedDict, total=False):

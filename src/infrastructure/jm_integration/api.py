@@ -1,8 +1,8 @@
 import msgspec
 
-from src.interfaces.jm_integration.client import JMClient
-from src.interfaces.jm_integration.enums import HttpMethod
-from src.payconnect.dto.schemas import Payload, Payment
+from src.infrastructure.jm_integration.client import JMClient
+from src.infrastructure.jm_integration.dto.schemas import Payload, Payment
+from src.infrastructure.jm_integration.enums import HttpMethod
 
 
 class JMPaymentAPI:

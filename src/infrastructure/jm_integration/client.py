@@ -4,8 +4,8 @@ from typing import TypeVar, cast
 import msgspec
 from dotenv import load_dotenv
 
-from src.interfaces.jm_integration.constants import RequestOptions
-from src.interfaces.jm_integration.enums import HttpMethod
+from src.infrastructure.jm_integration.constants import RequestOptions
+from src.infrastructure.jm_integration.enums import HttpMethod
 
 load_dotenv()
 API_KEY = os.getenv("JM_TOKEN")

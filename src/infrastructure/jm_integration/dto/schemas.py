@@ -1,10 +1,10 @@
 from litestar.dto import MsgspecDTO
 from msgspec import Struct
 
-from src.interfaces.jm_integration.enums import Currency, OperationType, Status
+from src.infrastructure.jm_integration.enums import Currency, OperationType, Status
 
 
-class Payment(Struct):
+class JMPayment(Struct):
     id: int
     status: Status
     token: str
@@ -22,31 +22,31 @@ class Payment(Struct):
     currency: Currency
 
 
-class PaymentDTO(MsgspecDTO[Payment]):
+class JMPaymentDTO(MsgspecDTO[JMPayment]):
     pass
 
 
-class Wallet(Struct):
+class JMWallet(Struct):
     available: int
     hold: int
     currency: Currency
 
 
-class WalletDTO(MsgspecDTO[Wallet]):
+class JMWalletDTO(MsgspecDTO[JMWallet]):
     pass
 
 
-class Balance(Struct):
+class JMBalance(Struct):
     success: bool
     errors: list[str]
-    wallet: Wallet
+    wallet: JMWallet
 
 
-class BalanceDTO(MsgspecDTO[Balance]):
+class JMBalanceDTO(MsgspecDTO[JMBalance]):
     pass
 
 
-class Customer(Struct):
+class JMCustomer(Struct):
     email: str
     first_name: str
     last_name: str
@@ -55,11 +55,11 @@ class Customer(Struct):
     country: str
 
 
-class CustomerDTO(MsgspecDTO[Customer]):
+class JMCustomerDTO(MsgspecDTO[JMCustomer]):
     pass
 
 
-class Payload(Struct):
+class JMPayload(Struct):
     product: str
     amount: int
     currency: Currency
@@ -67,8 +67,8 @@ class Payload(Struct):
     redirect_success_url: str
     redirect_fail_url: str
     callback_url: str
-    customer: Customer
+    customer: JMCustomer
 
 
-class PayloadDTO(MsgspecDTO[Payload]):
+class PayloadDTO(MsgspecDTO[JMPayload]):
     pass

@@ -1,17 +1,15 @@
 import os
-from typing import TypeVar, cast
 
 import msgspec
 from dotenv import load_dotenv
+from httpx import AsyncClient, HTTPError, RequestError
 
 from src.infrastructure.jm_integration.constants import RequestOptions
+from src.infrastructure.jm_integration.dto.schemas import JMPayment
 from src.infrastructure.jm_integration.enums import HttpMethod
 
 load_dotenv()
 API_KEY = os.getenv("JM_TOKEN")
-
-
-T = TypeVar("T")
 
 
 class JMClient:
@@ -23,16 +21,21 @@ class JMClient:
             "Content-Type": "application/json",
         }
 
-    def _make_request(
-        self,
-        method: HttpMethod,
-        endpoint: str,
-        response_type: type[T],
-        **kwargs: RequestOptions,
-    ) -> T:
-        response_data = {"": ""}
-        if response_type:
-            converted_data = msgspec.convert(response_data, response_type)
-            return cast(T, converted_data)
+    async def _make_request(
+        self, method: HttpMethod, endpoint: str, **kwargs: RequestOptions
+    ) -> JMPayment:
+        url = f"{self.base_url}{endpoint}"
+        try:
+            async with AsyncClient() as client:
+                response = await getattr(client, method.value)(
+                    url=url, headers=self.headers, **kwargs
+                )
+                response.raise_for_status()
+                response_data = response.json()
+                return msgspec.convert(response_data, JMPayment)
 
-        return cast(T, response_data)
+        except RequestError as error:
+            raise error
+
+        except HTTPError as error:
+            raise error

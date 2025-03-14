@@ -1,3 +1,5 @@
+import msgspec
+
 from src.payconnect.client import JMClient
 from src.payconnect.dto.schemas import Payload, Payment
 from src.payconnect.enums import HttpMethod
@@ -18,6 +20,6 @@ class JMPaymentAPI:
         return self.client._make_request(
             method=HttpMethod.POST,
             endpoint="/api/v1/payments",
-            json=payment_data,
+            json=msgspec.structs.asdict(payment_data),
             response_type=Payment,
         )

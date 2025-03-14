@@ -1,7 +1,7 @@
 from litestar.dto import MsgspecDTO
 from msgspec import Struct
 
-from src.payconnect.enums import Currency, OperationType, Status
+from src.interfaces.jm_integration.enums import Currency, OperationType, Status
 
 
 class Payment(Struct):

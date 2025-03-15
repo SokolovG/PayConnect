@@ -1,10 +1,10 @@
 from typing import Any, TypedDict
 
-from src.infrastructure.jm_integration.dto.schemas import JMPayload
+from src.infrastructure.jm_integration.dto.schemas import PaymentCreateRequest
 
 
 class RequestOptions(TypedDict, total=False):
     params: dict[str, str]
     json: dict[str, Any]
-    data: JMPayload
+    data: PaymentCreateRequest
     headers: dict[str, str]

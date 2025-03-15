@@ -1,5 +1,5 @@
 import os
-from typing import TypeVar
+from typing import Any
 
 from dotenv import load_dotenv
 from httpx import AsyncClient, HTTPError, RequestError
@@ -10,8 +10,6 @@ from src.infrastructure.jm_integration.enums import HttpMethod
 
 load_dotenv()
 API_KEY = os.getenv("JM_TOKEN")
-
-T = TypeVar("T")
 
 
 class JMClient:
@@ -25,7 +23,7 @@ class JMClient:
 
     async def _make_request(
         self, method: HttpMethod, endpoint: str, **kwargs: RequestOptions
-    ) -> T:
+    ) -> dict[str, Any]:
         url = f"{self.base_url}{endpoint}"
         try:
             async with AsyncClient() as client:

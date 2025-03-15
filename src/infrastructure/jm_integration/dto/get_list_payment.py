@@ -2,6 +2,7 @@ from litestar.dto import MsgspecDTO
 from msgspec import Struct, field
 
 from src.infrastructure.jm_integration.dto import PaymentInfo
+from src.infrastructure.jm_integration.dto.errors import ErrorDetail
 
 
 class PaymentListRequest(Struct):
@@ -25,7 +26,7 @@ class PaymentListResponse(Struct):
     per_page: int = field(name="perPage")
     total_page: int = field(name="totalPage")
     payments: list[PaymentInfo]
-    errors: list = []
+    errors: list[ErrorDetail] = []
 
 
 class PaymentListRequestDTO(MsgspecDTO[PaymentListRequest]):

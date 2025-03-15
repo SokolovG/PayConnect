@@ -4,6 +4,7 @@ from src.infrastructure.jm_integration.client import JMClient
 from src.infrastructure.jm_integration.dto import (
     BalanceResponse,
     OrderResponse,
+    PaymentConfirmResponse,
     PaymentCreateRequest,
     PaymentCreateResponse,
     PaymentInfoResponse,
@@ -72,3 +73,6 @@ class JMPaymentAPI:
             params={"currency": currency},
         )
         return msgspec.convert(response_data, BalanceResponse)
+
+    async def confirm_payment(self, token: str) -> PaymentConfirmResponse: ...
+    async def decline_payment(self, token: str) -> PaymentConfirmResponse: ...

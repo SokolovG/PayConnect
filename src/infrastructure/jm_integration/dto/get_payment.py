@@ -2,6 +2,7 @@ from litestar.dto import MsgspecDTO
 from msgspec import Struct, field
 
 from src.infrastructure.jm_integration.dto.commision import CommissionData
+from src.infrastructure.jm_integration.dto.errors import ErrorDetail
 from src.infrastructure.jm_integration.enums import Currency, OperationType, Status
 
 
@@ -13,12 +14,12 @@ class PaymentInfo(Struct):
     token: str
     product: str
     callback_url: str
-    redirect_success_url: str
-    redirect_fail_url: str
+    redirect_success_url: str = field(name="redirectSuccessUrl")
+    redirect_fail_url: str = field(name="redirectFailUrl")
     amount: int
     created_at: str
     updated_at: str
-    extra_return_param: str
+    extra_return_param: str = field(name="extraReturnParam")
     operation_type: OperationType
     order_number: int | str
     commission_data: CommissionData | None
@@ -31,7 +32,7 @@ class PaymentInfoResponse(Struct):
     success: bool
     status: int
     payment: PaymentInfo
-    errors: list[str] = []
+    errors: list[ErrorDetail] = []
 
 
 # Payment Info DTOs.

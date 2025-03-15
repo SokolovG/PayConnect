@@ -25,6 +25,7 @@ class Status(str, Enum):
     DECLINED = "declined"
     INIT = "init"
     SENT = "sent"
+    EXPIRED = "expired"
 
 
 class OperationType(str, Enum):

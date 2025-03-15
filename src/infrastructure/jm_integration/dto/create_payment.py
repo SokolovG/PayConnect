@@ -3,6 +3,7 @@ from msgspec import Struct, field
 
 from src.infrastructure.jm_integration.dto.base import PaymentDetails, RedirectRequest
 from src.infrastructure.jm_integration.dto.customer import CustomerInfo
+from src.infrastructure.jm_integration.dto.errors import ErrorDetail
 from src.infrastructure.jm_integration.enums import Currency
 
 
@@ -13,7 +14,7 @@ class PaymentCreateRequest(Struct):
     product: str
     amount: int
     callback_url: str = field(name="callbackUrl")
-    customer: CustomerInfo | None
+    customer: CustomerInfo
 
     # Optional fields with camelCase mapping
     locale: str | None
@@ -35,9 +36,10 @@ class PaymentCreateResponse(Struct):
     token: str
     processing_url: str | list[dict[str, str]] = field(name="processingUrl")
     payment: PaymentDetails
-    errors: list = []
+    errors: list[ErrorDetail] = []
     redirect_request: RedirectRequest | None = field(default=None, name="redirectRequest")
     selector_url: str | None = field(default=None, name="selectorURL")
+
 
 class PaymentCreateRequestDTO(MsgspecDTO[PaymentCreateRequest]):
     pass

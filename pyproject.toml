@@ -70,7 +70,7 @@ exclude = [
     "site-packages",
     "venv",
 ]
-line-length = 88
+line-length = 96
 indent-width = 4
 [tool.ruff.lint]
 select = ["E", "F", "B", "I", "N", "UP", "YTT", "ANN", "S", "A"]

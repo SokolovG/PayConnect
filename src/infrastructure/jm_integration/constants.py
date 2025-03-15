@@ -1,10 +1,8 @@
-from typing import Any, TypedDict
+from typing import Any, Final
 
-from src.infrastructure.jm_integration.dto.schemas import PaymentCreateRequest
+from src.infrastructure.jm_integration.dto.base import PaymentCreateRequest
 
-
-class RequestOptions(TypedDict, total=False):
-    params: dict[str, str]
-    json: dict[str, Any]
-    data: PaymentCreateRequest
-    headers: dict[str, str]
+RequestOptionsParam: Final = dict[str, str] | None
+RequestOptionsJson: Final = dict[str, Any] | None
+RequestOptionsData: Final = PaymentCreateRequest | None
+RequestOptionsHeaders: Final = dict[str, str] | None

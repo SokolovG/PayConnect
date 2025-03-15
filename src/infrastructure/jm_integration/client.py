@@ -5,7 +5,12 @@ from dotenv import load_dotenv
 from httpx import AsyncClient, HTTPError, RequestError
 
 from src.infrastructure.exceptions.jm_api_exceptions import JMAPIError
-from src.infrastructure.jm_integration.constants import RequestOptions
+from src.infrastructure.jm_integration.constants import (
+    RequestOptionsData,
+    RequestOptionsHeaders,
+    RequestOptionsJson,
+    RequestOptionsParam,
+)
 from src.infrastructure.jm_integration.enums import HttpMethod
 
 load_dotenv()
@@ -22,14 +27,30 @@ class JMClient:
         }
 
     async def _make_request(
-        self, method: HttpMethod, endpoint: str, **kwargs: RequestOptions
+        self,
+        method: HttpMethod,
+        endpoint: str,
+        *,
+        params: RequestOptionsParam = None,
+        json: RequestOptionsJson = None,
+        data: RequestOptionsData = None,
+        headers: RequestOptionsHeaders = None,
     ) -> dict[str, Any]:
         url = f"{self.base_url}{endpoint}"
+        request_kwargs = {"url": url, "headers": self.headers}
+        if params is not None:
+            request_kwargs["params"] = params
+        if json is not None:
+            request_kwargs["json"] = json
+        if data is not None:
+            request_kwargs["data"] = data
+        if headers is not None:
+            # Combine the transferred headlines with default.
+            request_kwargs["headers"] = {**self.headers, **headers}
+
         try:
             async with AsyncClient() as client:
-                response = await getattr(client, method.value)(
-                    url=url, headers=self.headers, **kwargs
-                )
+                response = await getattr(client, method.value)(**request_kwargs)
                 response.raise_for_status()
                 response_data = response.json()
                 return response_data

@@ -4,6 +4,7 @@ from msgspec import Struct
 from src.infrastructure.jm_integration.enums import Currency, OperationType, Status
 
 
+# General data types.
 class CustomerInfo(Struct):
     """Client data to create a payment."""
 
@@ -15,8 +16,17 @@ class CustomerInfo(Struct):
     ip: str | None = None
 
 
-class PaymentCreatePost(Struct):
-    """Request for the creation of payment Kes."""
+class CommissionData(Struct):
+    """Data on the payment commission."""
+
+    commission_value: float
+    commission_fee: float
+    commission_amount: float
+
+
+# Payment Create
+class PaymentCreateRequest(Struct):
+    """Request for the creation of payment."""
 
     product: str
     amount: int
@@ -28,6 +38,14 @@ class PaymentCreatePost(Struct):
     currency: Currency = Currency.KES
 
 
+class PaymentDetails(Struct):
+    """Details of payment in the creation payment response."""
+
+    amount: str
+    currency: str
+    status: str
+
+
 class RedirectRequestParams(Struct):
     """Parameters for redirect request."""
 
@@ -36,42 +54,27 @@ class RedirectRequestParams(Struct):
 
 
 class RedirectRequest(Struct):
-    """Details for redirect request, for example for 3DS."""
+    """Details for redirect request, for example, for 3DS."""
 
     url: str
     params: RedirectRequestParams
     type: str  # e.g. "post"
 
 
-class PaymentDetails(Struct):
-    """Details of payment in the answer."""
-
-    amount: str
-    currency: str
-    status: str
-
-
-class PaymentCreateGet(Struct):
-    """Answer to a request for a payment."""
+class PaymentCreateResponse(Struct):
+    """Response to a payment creation request."""
 
     success: bool
     token: str
-    processing_url: str  # Converted from processingUrl for
+    processing_url: str  # Converted from processingUrl
     payment: PaymentDetails
     errors: list[str] = []
     redirect_request: RedirectRequest = None  # Converted from redirectRequest
 
 
-class CommissionData(Struct):
-    """Data on the payment commission."""
-
-    commission_value: float
-    commission_fee: float
-    commission_amount: float
-
-
-class PaymentStatusResponse(Struct):
-    """Information about payment when requesting status."""
+# Payment Info
+class PaymentInfo(Struct):
+    """Detailed payment information."""
 
     id: int
     status: Status
@@ -90,8 +93,18 @@ class PaymentStatusResponse(Struct):
     commission_data: CommissionData
 
 
-class WalletData(Struct):
-    """Information about the wallet in the response to the request."""
+class PaymentInfoResponse(Struct):
+    """Full response for payment info request."""
+
+    success: bool
+    status: int
+    payment: PaymentInfo
+    errors: list[str] = []
+
+
+# Получение баланса (Balance)
+class WalletInfo(Struct):
+    """Information about the wallet."""
 
     available: int
     hold: int
@@ -102,24 +115,34 @@ class BalanceResponse(Struct):
     """Response to balance request."""
 
     success: bool
-    wallet: WalletData
+    wallet: WalletInfo
     errors: list[dict] = []
 
 
-# DTO FOR LITESTAR
-class CustomerDataDTO(MsgspecDTO[CustomerInfo]):
+# Payment Create DTOs
+class CustomerInfoDTO(MsgspecDTO[CustomerInfo]):
     pass
 
 
-class PaymentCreateRequestDTO(MsgspecDTO[PaymentCreatePost]):
+class PaymentCreateRequestDTO(MsgspecDTO[PaymentCreateRequest]):
     pass
 
 
-class PaymentCreateResponseDTO(MsgspecDTO[PaymentCreateGet]):
+class PaymentCreateResponseDTO(MsgspecDTO[PaymentCreateResponse]):
     pass
 
 
-class PaymentStatusResponseDTO(MsgspecDTO[PaymentStatusResponse]):
+# Payment Info DTOs
+class PaymentInfoDTO(MsgspecDTO[PaymentInfo]):
+    pass
+
+
+class PaymentInfoResponseDTO(MsgspecDTO[PaymentInfoResponse]):
+    pass
+
+
+# Balance DTOs
+class WalletInfoDTO(MsgspecDTO[WalletInfo]):
     pass
 
 

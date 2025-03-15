@@ -1,14 +1,17 @@
 import os
+from typing import TypeVar
 
 from dotenv import load_dotenv
 from httpx import AsyncClient, HTTPError, RequestError
 
+from src.infrastructure.exceptions.jm_api_exceptions import JMAPIError
 from src.infrastructure.jm_integration.constants import RequestOptions
-from src.infrastructure.jm_integration.dto.schemas import JMPayment
 from src.infrastructure.jm_integration.enums import HttpMethod
 
 load_dotenv()
 API_KEY = os.getenv("JM_TOKEN")
+
+T = TypeVar("T")
 
 
 class JMClient:
@@ -22,7 +25,7 @@ class JMClient:
 
     async def _make_request(
         self, method: HttpMethod, endpoint: str, **kwargs: RequestOptions
-    ) -> JMPayment:
+    ) -> T:
         url = f"{self.base_url}{endpoint}"
         try:
             async with AsyncClient() as client:
@@ -34,7 +37,13 @@ class JMClient:
                 return response_data
 
         except RequestError as error:
-            raise error
+            raise JMAPIError(
+                f"Error connecting to JM API at {endpoint}: {str(error)}",
+                original_error=error,
+            ) from error
 
         except HTTPError as error:
-            raise error
+            raise JMAPIError(
+                f"HTTP error when accessing JM API at {endpoint}: {str(error)}",
+                original_error=error,
+            ) from error

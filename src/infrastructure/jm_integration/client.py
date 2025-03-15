@@ -1,6 +1,5 @@
 import os
 
-import msgspec
 from dotenv import load_dotenv
 from httpx import AsyncClient, HTTPError, RequestError
 
@@ -32,7 +31,7 @@ class JMClient:
                 )
                 response.raise_for_status()
                 response_data = response.json()
-                return msgspec.convert(response_data, JMPayment)
+                return response_data
 
         except RequestError as error:
             raise error

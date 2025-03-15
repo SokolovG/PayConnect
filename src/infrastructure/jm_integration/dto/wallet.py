@@ -1,4 +1,3 @@
-from litestar.dto import MsgspecDTO
 from msgspec import Struct
 
 from src.infrastructure.jm_integration.enums import Currency
@@ -10,8 +9,3 @@ class WalletInfo(Struct):
     available: int | float
     hold: int | float
     currency: Currency
-
-
-# Balance DTOs
-class WalletInfoDTO(MsgspecDTO[WalletInfo]):
-    pass

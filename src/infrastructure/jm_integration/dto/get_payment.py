@@ -20,7 +20,7 @@ class PaymentInfo(Struct):
     updated_at: str
     extra_return_param: str
     operation_type: OperationType
-    order_number: int
+    order_number: int | str
     commission_data: CommissionData | None
     currency: Currency = field(default=Currency.KES)
 

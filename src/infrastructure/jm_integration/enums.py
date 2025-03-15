@@ -24,6 +24,7 @@ class Status(str, Enum):
     APPROVED = "approved"
     DECLINED = "declined"
     INIT = "init"
+    SENT = "sent"
 
 
 class OperationType(str, Enum):

@@ -33,11 +33,11 @@ class PaymentCreateResponse(Struct):
 
     success: bool
     token: str
-    processing_url: str = field(name="processingUrl")
+    processing_url: str | list[dict[str, str]] = field(name="processingUrl")
     payment: PaymentDetails
     errors: list = []
-    redirect_request: RedirectRequest = field(default=None, name="redirectRequest")
-
+    redirect_request: RedirectRequest | None = field(default=None, name="redirectRequest")
+    selector_url: str | None = field(default=None, name="selectorURL")
 
 class PaymentCreateRequestDTO(MsgspecDTO[PaymentCreateRequest]):
     pass

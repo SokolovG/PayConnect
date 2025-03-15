@@ -1,4 +1,3 @@
-from litestar.dto import MsgspecDTO
 from msgspec import Struct
 
 
@@ -34,7 +33,3 @@ class CustomerInfo(Struct):
     state: str | None
     browser: CustomerBrowser | None
     country: str
-
-
-class CustomerInfoDTO(MsgspecDTO[CustomerInfo]):
-    pass

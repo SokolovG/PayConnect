@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     """DataBase settings.
 
-    All settings for Posters
+    All settings for PostgreSQL
     """
 
     is_docker: bool = False

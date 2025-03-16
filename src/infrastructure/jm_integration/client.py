@@ -72,12 +72,16 @@ class JMClient:
                     except msgspec.ValidationError as error:
                         logger.error(f"Validation error for {endpoint}: {str(error)} ")
                         raise MsgspecCustomError(
-                            f"Validation error {str(error)}", status_code=422
+                            f"Validation error {str(error)}",
+                            status_code=422,
+                            original_error=error,
                         ) from error
                     except msgspec.DecodeError as error:
                         logger.error(f"Decode error for {endpoint}: {str(error)} ")
                         raise MsgspecCustomError(
-                            f"Invalid data format: {str(error)}", status_code=400
+                            f"Invalid data format: {str(error)}",
+                            status_code=400,
+                            original_error=error,
                         ) from error
                 return response_data
 

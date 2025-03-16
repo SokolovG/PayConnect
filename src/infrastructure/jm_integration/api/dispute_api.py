@@ -24,5 +24,6 @@ class JMDisputeAPI(BaseAPI):
             method=HttpMethod.GET,
             endpoint=f"{self.base_url}disputes",
             response_model=DisputeResponse,
-            params={}
+            params={},
         )
+

@@ -4,6 +4,11 @@ from src.infrastructure.jm_integration.enums import HttpMethod, Status
 
 
 class JMDisputeAPI(BaseAPI):
+    """Manage dispute operations.
+
+    Contains methods for retrieving and working with disputes.
+    """
+
     async def get_dispute(
         self,
         status: Status | None = None,
@@ -11,6 +16,18 @@ class JMDisputeAPI(BaseAPI):
         requisite: str | None = None,
         device: str | None = None,
     ) -> DisputeResponse:
+        """Retrieve dispute information with optional filtering.
+
+        Args:
+            status: Status filter from Status enum
+            date: Date string for filtering disputes
+            requisite: Requisite identifier string
+            device: Device identifier string
+
+        Returns:
+            DisputeResponse: Response containing dispute data
+
+        """
         params = {}
         if status:
             params["status"] = status
@@ -24,5 +41,5 @@ class JMDisputeAPI(BaseAPI):
             method=HttpMethod.GET,
             endpoint=f"{self.base_url}disputes",
             response_model=DisputeResponse,
-            params={}
+            params=params,
         )

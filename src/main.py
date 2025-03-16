@@ -8,7 +8,7 @@ from src.infrastructure.database.config import (
     get_sqlalchemy_config,
     get_sqlalchemy_plugin,
 )
-from src.infrastructure.logging.config import logging_config
+from src.infrastructure.logging_config.config import logging_config
 from src.interfaces.cli.commands import CLIPlugin
 
 sqlalchemy_plugin = get_sqlalchemy_plugin()

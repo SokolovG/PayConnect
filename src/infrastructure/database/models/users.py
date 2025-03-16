@@ -1,6 +1,7 @@
-from advanced_alchemy.base import UUIDBase
 from litestar_users.adapter.sqlalchemy.mixins import SQLAlchemyUserMixin
 
+from src.infrastructure.database.config import Base
 
-class User(UUIDBase, SQLAlchemyUserMixin):
+
+class User(Base, SQLAlchemyUserMixin):
     pass

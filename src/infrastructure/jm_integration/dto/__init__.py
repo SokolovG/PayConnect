@@ -1,8 +1,6 @@
 from src.infrastructure.jm_integration.dto.confirm_payment import (
     PaymentConfirmDetails,
-    PaymentConfirmRequest,
-    PaymentConfirmResponse,
-    PaymentDeclineRequest,
+    PaymentConfirmOrDeclineResponse,
 )
 from src.infrastructure.jm_integration.dto.create_payment import (
     PaymentCreateRequest,
@@ -47,7 +45,7 @@ __all__ = [
     "PaymentConfirmRequest",
     "PaymentDeclineRequest",
     "PaymentConfirmDetails",
-    "PaymentConfirmResponse",
+    "PaymentConfirmOrDeclineResponse",
     "PaymentListResponse",
     "PaymentListResponseDTO",
     "PaymentListRequest",

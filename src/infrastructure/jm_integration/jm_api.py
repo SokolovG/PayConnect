@@ -4,7 +4,7 @@ from src.infrastructure.jm_integration.client import JMClient
 from src.infrastructure.jm_integration.dto import (
     BalanceResponse,
     OrderResponse,
-    PaymentConfirmResponse,
+    PaymentConfirmOrDeclineResponse,
     PaymentCreateRequest,
     PaymentCreateResponse,
     PaymentInfoResponse,
@@ -19,19 +19,19 @@ class JMPaymentAPI:
         self.base_url: str = "/api/v1/"
 
     async def create_payment(self, payment_data: PaymentCreateRequest) -> PaymentCreateResponse:
-        response_data = await self.client._make_request(
+        return await self.client._make_request(
             method=HttpMethod.POST,
             endpoint=f"{self.base_url}payments",
             json=msgspec.structs.asdict(payment_data),
+            response_model=PaymentCreateResponse,
         )
-        return msgspec.convert(response_data, PaymentCreateResponse)
 
     async def get_payment(self, payment_token: str) -> PaymentInfoResponse:
-        response_data = await self.client._make_request(
+        return await self.client._make_request(
             method=HttpMethod.GET,
             endpoint=f"{self.base_url}payments/{payment_token}",
+            response_model=PaymentInfoResponse,
         )
-        return msgspec.convert(response_data, PaymentInfoResponse)
 
     async def get_list_payment(
         self,
@@ -55,24 +55,40 @@ class JMPaymentAPI:
             params["operationType"] = operation_type
         if order_number:
             params["orderNumber"] = order_number
-        response_data = await self.client._make_request(
-            method=HttpMethod.GET, endpoint=f"{self.base_url}payments", params=params
+        return await self.client._make_request(
+            method=HttpMethod.GET,
+            endpoint=f"{self.base_url}payments",
+            params=params,
+            response_model=PaymentListResponse,
         )
-        return msgspec.convert(response_data, PaymentListResponse)
 
     async def get_order(self, order_number: int) -> OrderResponse:
-        response_data = await self.client._make_request(
-            method=HttpMethod.GET, endpoint=f"{self.base_url}payments/order/{order_number}"
+        return await self.client._make_request(
+            method=HttpMethod.GET,
+            endpoint=f"{self.base_url}payments/order/{order_number}",
+            response_model=OrderResponse,
         )
-        return msgspec.convert(response_data, OrderResponse)
 
     async def get_balance(self, currency: Currency) -> BalanceResponse:
-        response_data = await self.client._make_request(
+        return await self.client._make_request(
             method=HttpMethod.GET,
             endpoint=f"{self.base_url}balance",
             params={"currency": currency},
+            response_model=BalanceResponse,
         )
-        return msgspec.convert(response_data, BalanceResponse)
 
-    async def confirm_payment(self, token: str) -> PaymentConfirmResponse: ...
-    async def decline_payment(self, token: str) -> PaymentConfirmResponse: ...
+    async def confirm_payment(self, token: str) -> PaymentConfirmOrDeclineResponse:
+        return await self.client._make_request(
+            method=HttpMethod.POST,
+            endpoint=f"{self.base_url}confirm",
+            json={"token": token},
+            response_model=PaymentConfirmOrDeclineResponse,
+        )
+
+    async def decline_payment(self, token: str) -> PaymentConfirmOrDeclineResponse:
+        return await self.client._make_request(
+            method=HttpMethod.POST,
+            endpoint=f"{self.base_url}decline",
+            json={"token": token},
+            response_model=PaymentConfirmOrDeclineResponse,
+        )

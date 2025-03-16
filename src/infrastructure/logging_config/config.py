@@ -7,7 +7,7 @@ logging_config = LoggingConfig(
     },
     handlers={
         "console": {
-            "class": "logging.StreamHandler",
+            "class": "logging_config.StreamHandler",
             "level": "INFO",
             "formatter": "standard",
         },

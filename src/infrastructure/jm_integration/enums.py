@@ -23,6 +23,7 @@ class Status(str, Enum):
     INIT = "init"
     SENT = "sent"
     EXPIRED = "expired"
+    PROCESSING = "processing"
 
 
 class OperationType(str, Enum):

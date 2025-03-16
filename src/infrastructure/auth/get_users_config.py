@@ -12,7 +12,7 @@ from src.infrastructure.database.models.users import User
 
 litestar_users_config = LitestarUsersConfig(
     auth_backend_class=JWTAuth,
-    secret="",
+    secret="c1d4e6f809a2b5c7d8e9f3a2",  # noqa: S106
     user_model=User,  # noqa
     user_read_dto=UserReadDTO,
     user_registration_dto=UserRegistrationDTO,

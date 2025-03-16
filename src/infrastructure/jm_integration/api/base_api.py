@@ -9,11 +9,14 @@ class BaseAPI:
 
         Args:
             client: async client for HTTP requests
-        base_url: prefix for all-endpoints
-        payment_url: basic url with payment prefix for JMPaymentAPI
-        payout_url: basic url with payout_url prefix for JMPayoutAPI
-        refund_url: basic url with refund_url prefix for JMRefundAPI
-        logger: logger for all api
+
+        Instance Attributes:
+            client: async client for HTTP requests
+            base_url: prefix for all-endpoints
+            payment_url: basic url with payment prefix for JMPaymentAPI
+            payout_url: basic url with payout_url prefix for JMPayoutAPI
+            refund_url: basic url with refund_url prefix for JMRefundAPI
+            logger: logger for all api
 
         """
         self.client: JMClient = client

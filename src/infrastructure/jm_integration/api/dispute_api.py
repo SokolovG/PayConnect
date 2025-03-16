@@ -18,7 +18,7 @@ class JMDisputeAPI(BaseAPI):
     ) -> DisputeResponse:
         """Retrieve dispute information with optional filtering.
 
-        Attributes:
+        Args:
             status: Status filter from Status enum
             date: Date string for filtering disputes
             requisite: Requisite identifier string

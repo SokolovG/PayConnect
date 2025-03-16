@@ -2,7 +2,7 @@ from litestar.dto import MsgspecDTO
 from msgspec import Struct, field
 
 from src.infrastructure.jm_integration.dto import PaymentInfo
-from src.infrastructure.jm_integration.dto.errors import ErrorDetail
+from src.infrastructure.jm_integration.dto.base import ErrorDetail
 
 
 class PaymentListRequest(Struct):

@@ -1,9 +1,12 @@
 from litestar.dto import MsgspecDTO
 from msgspec import Struct, field
 
-from src.infrastructure.jm_integration.dto.base import PaymentDetails, RedirectRequest
+from src.infrastructure.jm_integration.dto.base import (
+    ErrorDetail,
+    PaymentDetails,
+    RedirectRequest,
+)
 from src.infrastructure.jm_integration.dto.customer import CustomerInfo
-from src.infrastructure.jm_integration.dto.errors import ErrorDetail
 from src.infrastructure.jm_integration.enums import Currency
 
 

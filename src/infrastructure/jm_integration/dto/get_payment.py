@@ -1,9 +1,16 @@
 from litestar.dto import MsgspecDTO
 from msgspec import Struct, field
 
-from src.infrastructure.jm_integration.dto.commision import CommissionData
-from src.infrastructure.jm_integration.dto.errors import ErrorDetail
+from src.infrastructure.jm_integration.dto.base import ErrorDetail
 from src.infrastructure.jm_integration.enums import Currency, OperationType, Status
+
+
+class CommissionData(Struct):
+    """Data on the payment commission."""
+
+    commission_value: float
+    commission_fee: float
+    commission_amount: float
 
 
 class PaymentInfo(Struct):

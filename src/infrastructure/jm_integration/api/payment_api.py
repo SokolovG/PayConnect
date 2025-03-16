@@ -1,6 +1,6 @@
 import msgspec
 
-from src.infrastructure.jm_integration.client import JMClient
+from src.infrastructure.jm_integration.api.base_api import BaseAPI
 from src.infrastructure.jm_integration.dto import (
     BalanceResponse,
     OrderResponse,
@@ -13,11 +13,7 @@ from src.infrastructure.jm_integration.dto import (
 from src.infrastructure.jm_integration.enums import Currency, HttpMethod
 
 
-class JMPaymentAPI:
-    def __init__(self, client: JMClient) -> None:
-        self.client: JMClient = client
-        self.base_url: str = "/api/v1/"
-
+class JMPaymentAPI(BaseAPI):
     async def create_payment(self, payment_data: PaymentCreateRequest) -> PaymentCreateResponse:
         return await self.client._make_request(
             method=HttpMethod.POST,

@@ -1,5 +1,4 @@
-def main() -> None: ...
+from src.infrastructure.exceptions.jm_api_exceptions import JMAPIError
+from src.infrastructure.exceptions.msgsprec_exceptions import MsgspecCustomError
 
-
-if __name__ == "__main__":
-    main()
+__all__ = ["MsgspecCustomError", "JMAPIError"]

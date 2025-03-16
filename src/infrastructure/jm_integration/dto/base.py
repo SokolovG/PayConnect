@@ -22,3 +22,10 @@ class RedirectRequest(Struct):
     url: str
     params: RedirectRequestParams
     type: str  # e.g. "post"
+
+
+class ErrorDetail(Struct):
+    """Подробности ошибки API."""
+
+    code: str
+    kind: str

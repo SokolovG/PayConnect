@@ -76,7 +76,7 @@ class JMPaymentAPI(BaseAPI):
     async def confirm_payment(self, token: str) -> PaymentConfirmOrDeclineResponse:
         return await self.client._make_request(
             method=HttpMethod.POST,
-            endpoint=f"{self.base_url}confirm",
+            endpoint=f"{self.base_url}payments/confirm",
             json={"token": token},
             response_model=PaymentConfirmOrDeclineResponse,
         )

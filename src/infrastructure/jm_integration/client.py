@@ -1,8 +1,6 @@
-import os
 from typing import Any, TypeVar
 
 import msgspec
-from dotenv import load_dotenv
 from httpx import AsyncClient, HTTPError, RequestError
 
 from src.infrastructure.exceptions import JMAPIError, MsgspecCustomError
@@ -13,23 +11,19 @@ from src.infrastructure.jm_integration.constants import (
     RequestOptionsParam,
 )
 from src.infrastructure.jm_integration.enums import HttpMethod
-
-load_dotenv()
-API_KEY = os.getenv("JM_TOKEN")
-
+from src.infrastructure.jm_integration.jm_settings import jm_settings
 
 T = TypeVar("T")
 
 
 class JMClient:
     def __init__(self) -> None:
-        self.api_key: str = API_KEY
+        self.api_key: str = jm_settings.JM_TOKEN
         self.base_url: str = "https://business.processinprocess.com"
         self.headers: dict[str, str] = {
             "authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
-        self.client = AsyncClient()
 
     async def _make_request(
         self,
